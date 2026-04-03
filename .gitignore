@@ -1,0 +1,30 @@
+# Mix / Erlang
+/_build/
+/cover/
+/deps/
+/doc/
+/tmp/
+erl_crash.dump
+*.ez
+
+# Generated package tarball (mix hex.build)
+/dodgeball-*.tar
+
+# Escript binary at repo root (mix escript.build)
+/dodgeball
+
+# Editor & tooling
+.elixir_ls/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Local env / secrets (if you add them later)
+.env
+.env.*
+!.env.example
