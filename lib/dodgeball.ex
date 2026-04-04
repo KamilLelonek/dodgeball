@@ -88,7 +88,8 @@ defmodule Dodgeball do
     do: {scan_direction, nearest_entry}
 
   defp opponents_on_compass_ray(opponents, origin, direction_vector) do
-    Enum.filter(opponents, fn {_player_index, grid_position} ->
+    opponents
+    |> Enum.filter(fn {_player_index, grid_position} ->
       exactly_in_direction?(origin, grid_position, direction_vector)
     end)
   end
@@ -96,7 +97,8 @@ defmodule Dodgeball do
   defp nearest_player_entry(_origin, []), do: nil
 
   defp nearest_player_entry(origin, candidate_entries) do
-    Enum.min_by(candidate_entries, fn {_player_index, grid_position} ->
+    candidate_entries
+    |> Enum.min_by(fn {_player_index, grid_position} ->
       squared_distance(origin, grid_position)
     end)
   end
@@ -110,11 +112,15 @@ defmodule Dodgeball do
   defp compass_direction_at_offset(start_index, offset),
     do: Enum.at(@compass_directions, rem(start_index + offset, 8))
 
-  defp opposite_direction(direction),
-    do: compass_direction_at_offset(@direction_index[direction], 4)
+  defp opposite_direction(direction) do
+    direction
+    |> then(&@direction_index[&1])
+    |> compass_direction_at_offset(4)
+  end
 
   defp exactly_in_direction?(from_coordinate, to_coordinate, direction_vector) do
-    displacement(from_coordinate, to_coordinate)
+    from_coordinate
+    |> displacement(to_coordinate)
     |> lies_on_directed_ray?(direction_vector)
   end
 
